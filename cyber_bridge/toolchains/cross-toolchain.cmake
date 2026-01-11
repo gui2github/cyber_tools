@@ -1,0 +1,33 @@
+# 设置交叉编译的系统
+set(CMAKE_SYSTEM_NAME Linux)
+set(CMAKE_SYSTEM_PROCESSOR aarch64)
+
+if (NOT DEFINED CROSS_TOOLS_PATH)
+    set(CROSS_TOOLS_PATH /opt/cross-tools)
+endif()
+
+set(TOOLCHAIN_PATH ${CROSS_TOOLS_PATH}/${PLATFORM}/aarch64--glibc)
+
+# 交叉编译器前缀
+set(CROSS_PREFIX ${TOOLCHAIN_PATH}/bin/aarch64-buildroot-linux-gnu-)
+
+set(CMAKE_C_COMPILER   ${CROSS_PREFIX}gcc)
+set(CMAKE_CXX_COMPILER ${CROSS_PREFIX}g++)
+set(CMAKE_AR           ${CROSS_PREFIX}ar)
+set(CMAKE_AS           ${CROSS_PREFIX}as)
+set(CMAKE_RANLIB       ${CROSS_PREFIX}ranlib)
+set(CMAKE_STRIP        ${CROSS_PREFIX}strip)
+
+set(CMAKE_SYSROOT ${TOOLCHAIN_PATH}/aarch64-buildroot-linux-gnu/sysroot)
+# 搜索路径设置
+set(CMAKE_FIND_ROOT_PATH ${CMAKE_SYSROOT})
+set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)  # 用本机程序
+set(CMAKE_FIND_ROOT_PATH_MODE_LIBRARY ONLY)   # 用 sysroot 库
+set(CMAKE_FIND_ROOT_PATH_MODE_INCLUDE ONLY)   # 用 sysroot include
+set(CMAKE_FIND_ROOT_PATH_MODE_PACKAGE ONLY)
+
+# set(CMAKE_TRY_COMPILE_TARGET_TYPE STATIC_LIBRARY)
+
+# 可选：指定 C 标准库
+set(CMAKE_C_FLAGS   "--sysroot=${CMAKE_SYSROOT} ${CMAKE_C_FLAGS}")
+set(CMAKE_CXX_FLAGS "--sysroot=${CMAKE_SYSROOT} ${CMAKE_CXX_FLAGS}")

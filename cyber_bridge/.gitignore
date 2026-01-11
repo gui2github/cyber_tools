@@ -1,0 +1,6 @@
+.vscode
+build
+output
+foxglove_bridge
+.clang-tidy
+.clang-format
