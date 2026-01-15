@@ -1,0 +1,38 @@
+{
+  "name": "cyber-data-loader",
+  "displayName": "cyber-data-loader",
+  "description": "Foxglove 数据加载器扩展，用于解析和加载 Cyber 的 .record 格式数据文件。支持 protobuf 消息类型，可自动解析消息结构和通道信息。",
+  "publisher": "gli",
+  "homepage": "",
+  "version": "0.2.0",
+  "license": "UNLICENSED",
+  "main": "./dist/extension.js",
+  "keywords": [],
+  "scripts": {
+    "build": "npm run build:wasm && foxglove-extension build",
+    "build:wasm": "cd rust && cargo build --release --target wasm32-unknown-unknown",
+    "foxglove:prepublish": "npm run build:wasm && foxglove-extension build --mode production",
+    "lint:ci": "eslint --report-unused-disable-directives .",
+    "lint": "eslint --report-unused-disable-directives --fix .",
+    "local-install": "foxglove-extension install",
+    "package": "foxglove-extension package",
+    "pretest": "foxglove-extension pretest",
+    "test:rust": "cd rust && cargo test",
+    "test:js": "node test/simple_test.js",
+    "test": "npm run test:rust && npm run test:js"
+  },
+  "devDependencies": {
+    "@foxglove/eslint-plugin": "2.1.0",
+    "@foxglove/extension": "2.43.0",
+    "@foxglove/schemas": "1.8.0",
+    "@types/react": "19.2.7",
+    "@types/react-dom": "19.2.3",
+    "@types/wicg-file-system-access": "2023.10.7",
+    "create-foxglove-extension": "1.1.1",
+    "eslint": "9.39.2",
+    "prettier": "3.7.4",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "typescript": "5.9.3"
+  }
+}
